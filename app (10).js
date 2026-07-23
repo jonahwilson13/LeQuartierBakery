@@ -1,0 +1,757 @@
+const { useState, useEffect, useMemo, useCallback } = React;
+const {
+  ComposedChart, LineChart, BarChart, Bar, Line, Area, XAxis, YAxis, CartesianGrid,
+  Tooltip, Legend, ReferenceLine, ResponsiveContainer,
+} = Recharts;
+
+const LOCATION_NAMES = ["Edgewood", "Meridian", "Dundee", "Loveland"];
+const LOCATION_FILES = {
+  Edgewood: "data/edgewood.json",
+  Meridian: "data/meridian.json",
+  Dundee: "data/dundee.json",
+  Loveland: "data/loveland.json",
+};
+const DAY_CATEGORIES = ["Breads", "Pastries", "Desserts"];
+const TAB_CATEGORIES = ["Breads", "Pastries", "Desserts", "Breakfast & Lunch", "After 2PM"];
+// These categories don't have day-of-week data — just a flat weekly total per
+// item — so they share the same "ranked popularity" view instead of the
+// day-of-week charts.
+const SIMPLE_CATEGORIES = ["Breakfast & Lunch", "After 2PM"];
+
+const CREDENTIALS = [
+  { username: "jonahwilson", passcode: "5595215263", displayName: "Jonah" },
+  { username: "sethquiring", passcode: "4025604770", displayName: "Seth" },
+];
+
+const DAY_ORDER = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+const DEFAULT_ACTIVE = {
+  Breads: ["White Sourdough"],
+  Pastries: ["Cinnamon Roll Individual"],
+  Desserts: ["Lemon Bar"],
+};
+
+const LINE_COLORS = ["#C41230"];
+
+function colorForIndex(i) { return LINE_COLORS[i % LINE_COLORS.length]; }
+function itemTotalVolume(entry) { return entry.total_weekly.reduce((a, b) => a + b, 0); }
+
+function formatDateLabel(iso) {
+  const [y, m, d] = iso.split("-").map(Number);
+  return `${MONTHS[m - 1]} ${d}`;
+}
+
+function addDaysISO(iso, days) {
+  const [y, m, d] = iso.split("-").map(Number);
+  const dt = new Date(Date.UTC(y, m - 1, d));
+  dt.setUTCDate(dt.getUTCDate() + days);
+  const yy = dt.getUTCFullYear();
+  const mm = String(dt.getUTCMonth() + 1).padStart(2, "0");
+  const dd = String(dt.getUTCDate()).padStart(2, "0");
+  return `${yy}-${mm}-${dd}`;
+}
+
+function rollingAvg(arr) {
+  return arr.map((_, i) => {
+    const start = Math.max(0, i - 2);
+    const slice = arr.slice(start, i + 1);
+    return slice.reduce((a, b) => a + b, 0) / slice.length;
+  });
+}
+
+function linregForecast(y, nFuture) {
+  const n = y.length;
+  if (n === 0) return { forecasts: Array(nFuture).fill(0), residStd: 0, slope: 0 };
+  if (n === 1) return { forecasts: Array(nFuture).fill(y[0]), residStd: 0, slope: 0 };
+  const xs = y.map((_, i) => i);
+  const meanX = xs.reduce((a, b) => a + b, 0) / n;
+  const meanY = y.reduce((a, b) => a + b, 0) / n;
+  let num = 0, den = 0;
+  for (let i = 0; i < n; i++) {
+    num += (xs[i] - meanX) * (y[i] - meanY);
+    den += (xs[i] - meanX) ** 2;
+  }
+  const slope = den !== 0 ? num / den : 0;
+  const intercept = meanY - slope * meanX;
+  const predsIn = xs.map((x) => slope * x + intercept);
+  const residuals = y.map((v, i) => v - predsIn[i]);
+  const residStd = n > 2 ? Math.sqrt(residuals.reduce((a, r) => a + r * r, 0) / (n - 2)) : 0;
+  const forecasts = [];
+  for (let k = n; k < n + nFuture; k++) forecasts.push(slope * k + intercept);
+  return { forecasts, residStd, slope };
+}
+
+function computeAllDerived(weeksSorted) {
+  const n = weeksSorted.length;
+  const labels = weeksSorted.map((w) => formatDateLabel(w.date));
+  const lastDate = n > 0 ? weeksSorted[n - 1].date : null;
+  const forecastLabels = [];
+  for (let k = 1; k <= 4; k++) {
+    const d = lastDate ? addDaysISO(lastDate, 7 * k) : null;
+    forecastLabels.push(d ? formatDateLabel(d) : `+${k}wk`);
+  }
+
+  const buckets = {};
+  DAY_CATEGORIES.forEach((cat) => (buckets[cat] = {}));
+
+  const itemsByCat = {};
+  weeksSorted.forEach((w) => {
+    DAY_CATEGORIES.forEach((cat) => {
+      const catData = w.data[cat] || {};
+      itemsByCat[cat] = itemsByCat[cat] || new Set();
+      Object.keys(catData).forEach((item) => itemsByCat[cat].add(item));
+    });
+  });
+
+  DAY_CATEGORIES.forEach((cat) => {
+    const items = itemsByCat[cat] || new Set();
+    items.forEach((item) => {
+      const daysUsed = new Set();
+      weeksSorted.forEach((w) => {
+        const d = (w.data[cat] && w.data[cat][item]) || {};
+        Object.keys(d).forEach((day) => daysUsed.add(day));
+      });
+      const day_weekly = {};
+      DAY_ORDER.forEach((day) => {
+        if (!daysUsed.has(day)) return;
+        day_weekly[day] = weeksSorted.map(
+          (w) => (w.data[cat] && w.data[cat][item] && w.data[cat][item][day]) || 0
+        );
+      });
+      const day_ma = {};
+      Object.entries(day_weekly).forEach(([day, arr]) => {
+        day_ma[day] = rollingAvg(arr).map((v) => Math.round(v * 100) / 100);
+      });
+
+      const total_weekly = weeksSorted.map((w, i) => {
+        let sum = 0;
+        Object.values(day_weekly).forEach((arr) => (sum += arr[i]));
+        return Math.round(sum * 10) / 10;
+      });
+      const total_ma = rollingAvg(total_weekly).map((v) => Math.round(v * 100) / 100);
+
+      let forecast_med = [0, 0, 0, 0], forecast_low = [0, 0, 0, 0], forecast_high = [0, 0, 0, 0], forecast_slope = 0;
+      if (n >= 2) {
+        const { forecasts, residStd, slope } = linregForecast(total_weekly, 4);
+        forecast_slope = Math.round(slope * 100) / 100;
+        forecast_med = forecasts.map((f) => Math.max(0, Math.round(f * 10) / 10));
+        forecast_low = forecast_med.map((m) => {
+          const band = Math.max(residStd, 0.08 * m);
+          return Math.max(0, Math.round((m - band) * 10) / 10);
+        });
+        forecast_high = forecast_med.map((m) => {
+          const band = Math.max(residStd, 0.08 * m);
+          return Math.round((m + band) * 10) / 10;
+        });
+      }
+
+      // Per-day-of-week forecast: same method, run separately on each day's own
+      // weekly series, so "next Saturday" gets its own low/medium/high instead of
+      // just an even split of the item's total forecast.
+      const day_forecast = {};
+      Object.entries(day_weekly).forEach(([day, arr]) => {
+        let med = [0, 0, 0, 0], low = [0, 0, 0, 0], high = [0, 0, 0, 0], dslope = 0;
+        if (n >= 2) {
+          const { forecasts: dForecasts, residStd: dResidStd, slope: dSlope } = linregForecast(arr, 4);
+          dslope = Math.round(dSlope * 100) / 100;
+          med = dForecasts.map((f) => Math.max(0, Math.round(f * 10) / 10));
+          low = med.map((m) => {
+            const band = Math.max(dResidStd, 0.08 * m);
+            return Math.max(0, Math.round((m - band) * 10) / 10);
+          });
+          high = med.map((m) => {
+            const band = Math.max(dResidStd, 0.08 * m);
+            return Math.round((m + band) * 10) / 10;
+          });
+        }
+        day_forecast[day] = { med, low, high, slope: dslope };
+      });
+
+      buckets[cat][item] = { day_ma, day_weekly, total_ma, total_weekly, forecast_med, forecast_low, forecast_high, forecast_slope, day_forecast };
+    });
+  });
+
+  return { labels, forecastLabels, buckets, nWeeks: n, weekISOs: weeksSorted.map((w) => w.date) };
+}
+
+// Categories with only ONE number per week (no day-of-week breakdown) share
+// this computation: an all-time ranking and a per-week breakdown, so the
+// dashboard can show either "most popular overall" or "most popular this
+// specific week." Used for Breakfast & Lunch and After 2PM.
+function computeSimplePopularity(weeksSorted, categoryKey) {
+  const totals = {};
+  const byWeek = weeksSorted.map((w) => {
+    const catData = w.data[categoryKey] || {};
+    Object.entries(catData).forEach(([item, qty]) => {
+      totals[item] = (totals[item] || 0) + qty;
+    });
+    const items = Object.entries(catData)
+      .map(([item, qty]) => ({ item, total: Math.round(qty * 10) / 10 }))
+      .sort((a, b) => b.total - a.total);
+    return { date: w.date, label: formatDateLabel(w.date), items };
+  });
+  const total = Object.entries(totals)
+    .map(([item, t]) => ({ item, total: Math.round(t * 10) / 10 }))
+    .sort((a, b) => b.total - a.total);
+  return { total, byWeek };
+}
+
+function strongestWeakestDay(dayMa) {
+  let best = null, bestVal = -Infinity;
+  let worst = null, worstVal = Infinity;
+  Object.entries(dayMa).forEach(([day, arr]) => {
+    const avg = arr.reduce((a, b) => a + b, 0) / arr.length;
+    if (avg > bestVal) { bestVal = avg; best = day; }
+    if (avg < worstVal) { worstVal = avg; worst = day; }
+  });
+  return { best, bestVal, worst, worstVal };
+}
+
+function generateParagraph(name, entry, labels, forecastLabels) {
+  const arr = entry.total_ma;
+  const first = arr[0];
+  const last = arr[arr.length - 1];
+  const diff = last - first;
+  const pct = first !== 0 ? (diff / first) * 100 : null;
+  const { best, bestVal, worst, worstVal } = strongestWeakestDay(entry.day_ma);
+
+  let trendWord = "held roughly steady";
+  if (pct !== null) {
+    if (pct > 8) trendWord = "climbed";
+    else if (pct < -8) trendWord = "eased back";
+  } else if (diff > 0) trendWord = "climbed";
+  else if (diff < 0) trendWord = "eased back";
+
+  const pctText = pct !== null
+    ? `${pct >= 0 ? "up" : "down"} ${Math.abs(pct).toFixed(0)}%`
+    : `a change of ${diff >= 0 ? "+" : ""}${diff.toFixed(1)} units`;
+
+  const rangeText = labels.length > 1 ? `from the week of ${labels[0]} to the week of ${labels[labels.length - 1]}` : "so far";
+
+  // Find the busiest and softest forecasted day specifically for next week (first forecast column).
+  const daysWithForecast = Object.keys(entry.day_forecast);
+  let nextBusiest = null, nextBusiestVal = -Infinity;
+  let nextSoftest = null, nextSoftestVal = Infinity;
+  daysWithForecast.forEach((day) => {
+    const v = entry.day_forecast[day].med[0];
+    if (v > nextBusiestVal) { nextBusiestVal = v; nextBusiest = day; }
+    if (v < nextSoftestVal) { nextSoftestVal = v; nextSoftest = day; }
+  });
+  const nextWeekLabel = forecastLabels && forecastLabels.length > 0 ? forecastLabels[0] : null;
+
+  let forecastSentence = "";
+  if (nextWeekLabel && nextBusiest) {
+    forecastSentence = ` For the week of ${nextWeekLabel}, expect the most demand on ${nextBusiest} (around ${nextBusiestVal.toFixed(1)} units) and the least on ${nextSoftest} (around ${nextSoftestVal.toFixed(1)} units) \u2014 see the production table below for both of the next 2 weeks, day by day.`;
+  }
+
+  return `${name} ${trendWord} ${rangeText}, from about ${Math.round(first)} to ${Math.round(last)} units per week (${pctText}). Historically, ${best} has been the strongest day for this item (around ${bestVal.toFixed(1)} units) and ${worst} the softest (around ${worstVal.toFixed(1)} units).${forecastSentence}`;
+}
+
+function CustomTooltip({ active, payload, label, forecastLabels }) {
+  if (!active || !payload || !payload.length) return null;
+  const isForecast = forecastLabels.includes(label);
+  const seen = new Set();
+  const rows = [];
+  payload.forEach((p) => {
+    if (p.dataKey.includes("__band")) return;
+    const baseName = p.dataKey.replace("__fc", "");
+    if (seen.has(baseName)) return;
+    seen.add(baseName);
+    if (p.value == null) return;
+    rows.push({ name: baseName, value: p.value, color: p.color });
+  });
+  rows.sort((a, b) => b.value - a.value);
+
+  return React.createElement("div", {
+    style: { background: "#FFFFFF", border: "1px solid #E8B9BC", borderRadius: 6, padding: "10px 14px", boxShadow: "0 4px 14px rgba(0,0,0,0.15)", fontFamily: "'Inter', sans-serif" }
+  },
+    React.createElement("div", { style: { fontWeight: 700, color: "#1A1A1A", marginBottom: 6, fontSize: 12.5 } }, `${isForecast ? "Forecast (medium)" : "3-Wk Avg"} — ${label}`),
+    rows.map((r) => React.createElement("div", {
+      key: r.name,
+      style: { fontSize: 12, color: "#1A1A1A", display: "flex", justifyContent: "space-between", gap: 16 }
+    },
+      React.createElement("span", { style: { display: "flex", alignItems: "center", gap: 6 } },
+        React.createElement("span", { style: { width: 8, height: 8, borderRadius: 99, background: r.color, display: "inline-block" } }),
+        r.name
+      ),
+      React.createElement("span", { style: { fontWeight: 600 } }, r.value?.toFixed(1))
+    ))
+  );
+}
+
+function ForecastTable({ entry, forecastLabels, days }) {
+  const weekLabels = forecastLabels.slice(0, 2);
+  return React.createElement("div", { style: { overflowX: "auto", marginTop: 8 } },
+    React.createElement("table", { style: { borderCollapse: "collapse", width: "100%", fontSize: 12.5 } },
+      React.createElement("thead", null,
+        React.createElement("tr", null,
+          React.createElement("th", { style: { textAlign: "left", padding: "6px 10px", color: "#4D4D4D", fontWeight: 600, borderBottom: "1.5px solid #E8B9BC" } }, "Day"),
+          weekLabels.map((label, i) => React.createElement("th", { key: i, style: { textAlign: "right", padding: "6px 10px", color: "#4D4D4D", fontWeight: 600, borderBottom: "1.5px solid #E8B9BC" } }, `Week of ${label}`))
+        )
+      ),
+      React.createElement("tbody", null,
+        days.map((day) => React.createElement("tr", { key: day },
+          React.createElement("td", { style: { padding: "6px 10px", color: "#1A1A1A", fontWeight: 500 } }, day),
+          weekLabels.map((_, i) => React.createElement("td", { key: i, style: { padding: "6px 10px", textAlign: "right", color: "#1A1A1A", fontWeight: 600 } }, entry.day_forecast[day].med[i].toFixed(1)))
+        )),
+        React.createElement("tr", null,
+          React.createElement("td", { style: { padding: "7px 10px", color: "#1A1A1A", fontWeight: 700, borderTop: "1.5px solid #E8B9BC" } }, "Total"),
+          weekLabels.map((_, i) => React.createElement("td", { key: i, style: { padding: "7px 10px", textAlign: "right", color: "#1A1A1A", fontWeight: 700, borderTop: "1.5px solid #E8B9BC" } }, entry.forecast_med[i].toFixed(1)))
+        )
+      )
+    )
+  );
+}
+
+// One tiny, single-line chart for one item on one specific day of week.
+// X-axis shows the exact date of each occurrence (e.g. the actual Wednesdays),
+// not the week's Monday start date — no color-decoding needed since there's
+// only ever one line here.
+// Option A: mini chart per day of week, bars instead of a line, same exact-date
+// x-axis labels as before. Answers "is this day trending up or down over time?"
+// One bar chart per item, one bar per day of week (Mon-Sun), showing each
+// day's CURRENT 3-week moving average side by side. This is the primary view:
+// "which days does this item sell best on, right now?"
+// Horizontal bar chart ranking items by total units sold across the loaded
+// weeks — most popular at the top. Used for any category that only has a
+// flat weekly total (Breakfast & Lunch, After 2PM) rather than a day-of-week
+// breakdown.
+const SIMPLE_COLORS = { "Breakfast & Lunch": "#8B1A1F", "After 2PM": "#C41230" };
+function PopularityBarChart({ items, color }) {
+  const height = Math.max(220, items.length * 28 + 40);
+  return React.createElement(ResponsiveContainer, { width: "100%", height },
+    React.createElement(BarChart, {
+      data: items, layout: "vertical", margin: { top: 4, right: 30, left: 4, bottom: 4 }
+    },
+      React.createElement(CartesianGrid, { stroke: "#F4DCDD", strokeDasharray: "0", horizontal: false }),
+      React.createElement(XAxis, { type: "number", tick: { fill: "#4D4D4D", fontSize: 11.5 }, axisLine: { stroke: "#E8B9BC" }, tickLine: false }),
+      React.createElement(YAxis, { type: "category", dataKey: "item", width: 190, tick: { fill: "#1A1A1A", fontSize: 12 }, axisLine: false, tickLine: false }),
+      React.createElement(Tooltip, {
+        contentStyle: { background: "#FFFFFF", border: "1px solid #E8B9BC", borderRadius: 6, fontSize: 12, fontFamily: "'Inter', sans-serif" },
+        labelStyle: { color: "#1A1A1A", fontWeight: 700 },
+        cursor: { fill: "#F4DCDD", opacity: 0.5 },
+        formatter: (v) => [v?.toFixed(1) + " units total", "Sold"],
+      }),
+      React.createElement(Bar, { dataKey: "total", fill: color, radius: [0, 4, 4, 0], isAnimationActive: false })
+    )
+  );
+}
+
+function SnapshotBarChart({ entry, days }) {
+  const data = days.map((day) => ({
+    day: day.slice(0, 3),
+    fullDay: day,
+    value: entry.day_ma[day][entry.day_ma[day].length - 1],
+  }));
+  return React.createElement(ResponsiveContainer, { width: "100%", height: 200 },
+    React.createElement(BarChart, { data, margin: { top: 8, right: 12, left: -10, bottom: 0 } },
+      React.createElement(CartesianGrid, { stroke: "#F4DCDD", strokeDasharray: "0", vertical: false }),
+      React.createElement(XAxis, { dataKey: "day", tick: { fill: "#4D4D4D", fontSize: 12 }, axisLine: { stroke: "#E8B9BC" }, tickLine: false }),
+      React.createElement(YAxis, { tick: { fill: "#4D4D4D", fontSize: 11.5 }, axisLine: false, tickLine: false, width: 34 }),
+      React.createElement(Tooltip, {
+        contentStyle: { background: "#FFFFFF", border: "1px solid #E8B9BC", borderRadius: 6, fontSize: 12, fontFamily: "'Inter', sans-serif" },
+        labelStyle: { color: "#1A1A1A", fontWeight: 700 },
+        cursor: { fill: "#F4DCDD", opacity: 0.5 },
+        formatter: (v, n, p) => [v?.toFixed(1), p.payload.fullDay],
+      }),
+      React.createElement(Bar, {
+        dataKey: "value", radius: [4, 4, 0, 0], isAnimationActive: false,
+        shape: (props) => {
+          const { x, y, width, height, payload } = props;
+          return React.createElement("rect", { x, y, width, height, rx: 4, ry: 4, fill: DAY_COLORS[payload.fullDay] });
+        },
+      })
+    )
+  );
+}
+
+// One item's full section: name, then its day-of-week snapshot bar chart.
+function ItemDayRow({ name, entry, visibleDays }) {
+  const days = DAY_ORDER.filter((d) => entry.day_ma[d] && visibleDays.has(d));
+
+  return React.createElement("div", {
+    className: "lq-day-card",
+    style: { background: "#FFFFFF", border: "1px solid #E8B9BC", borderRadius: 14, padding: "18px 20px", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }
+  },
+    React.createElement("div", { style: { fontFamily: "'Fraunces', serif", fontWeight: 600, fontSize: 16, color: "#1A1A1A", marginBottom: 2 } }, name),
+    React.createElement("div", { style: { fontSize: 11.5, color: "#666666", marginBottom: 12 } }, "Current 3-week moving average, side by side by day of week"),
+    days.length === 0
+      ? React.createElement("div", { style: { textAlign: "center", color: "#7A7A7A", padding: "30px 0", fontSize: 12.5 } }, "No days selected — use the day filter above.")
+      : React.createElement(SnapshotBarChart, { entry, days })
+  );
+}
+
+function ItemDetailCard({ name, entry, color, labels, forecastLabels }) {
+  const paragraph = useMemo(() => generateParagraph(name, entry, labels, forecastLabels), [name, entry, labels, forecastLabels]);
+  const days = DAY_ORDER.filter((d) => entry.day_ma[d]);
+
+  return React.createElement("div", {
+    style: { background: "#FFFFFF", border: `1.5px solid ${color}55`, borderLeft: `5px solid ${color}`, borderRadius: 10, padding: "16px 18px" }
+  },
+    React.createElement("div", { style: { fontFamily: "'Fraunces', serif", fontWeight: 600, fontSize: 15, color: "#1A1A1A", marginBottom: 8, display: "flex", alignItems: "center", gap: 8 } },
+      React.createElement("span", { style: { width: 10, height: 10, borderRadius: 99, background: color, display: "inline-block" } }),
+      name
+    ),
+    React.createElement("p", { style: { fontSize: 13, lineHeight: 1.6, color: "#1A1A1A", margin: "0 0 6px" } }, paragraph),
+    React.createElement("div", { style: { fontSize: 11.5, fontWeight: 700, color: "#4D4D4D", marginTop: 12, textTransform: "uppercase", letterSpacing: "0.05em" } }, "3-Wk Moving Avg by Day"),
+    React.createElement("div", { style: { fontSize: 10.5, color: "#666666", marginBottom: 4 } }, "Each column is one calendar week (Mon\u2013Sun), starting on the date shown. Rows are that week's actual numbers for each day."),
+    React.createElement("div", { style: { overflowX: "auto" } },
+      React.createElement("table", { style: { borderCollapse: "collapse", width: "100%", fontSize: 11.5 } },
+        React.createElement("thead", null,
+          React.createElement("tr", null,
+            React.createElement("th", { style: { textAlign: "left", padding: "5px 8px", color: "#4D4D4D", fontWeight: 600, borderBottom: "1.5px solid #E8B9BC" } }, "Day"),
+            labels.map((label) => React.createElement("th", { key: label, style: { textAlign: "right", padding: "5px 8px", color: "#4D4D4D", fontWeight: 600, borderBottom: "1.5px solid #E8B9BC" } }, `Week of ${label}`))
+          )
+        ),
+        React.createElement("tbody", null,
+          days.map((day) => React.createElement("tr", { key: day },
+            React.createElement("td", { style: { padding: "4px 8px", color: "#1A1A1A", fontWeight: 500 } }, day),
+            entry.day_ma[day].map((v, i) => React.createElement("td", { key: i, style: { padding: "4px 8px", textAlign: "right", color: "#1A1A1A" } }, v.toFixed(1)))
+          )),
+          React.createElement("tr", null,
+            React.createElement("td", { style: { padding: "5px 8px", color: "#1A1A1A", fontWeight: 700, borderTop: "1.5px solid #E8B9BC" } }, "Total"),
+            entry.total_ma.map((v, i) => React.createElement("td", { key: i, style: { padding: "5px 8px", textAlign: "right", color: "#1A1A1A", fontWeight: 700, borderTop: "1.5px solid #E8B9BC" } }, v.toFixed(1)))
+          )
+        )
+      )
+    ),
+    React.createElement("div", { style: { fontSize: 11.5, fontWeight: 700, color: "#4D4D4D", marginTop: 14, textTransform: "uppercase", letterSpacing: "0.05em" } }, "Production Estimate — Next 2 Weeks, by Day"),
+    React.createElement(ForecastTable, { entry, forecastLabels, days })
+  );
+}
+
+// One consistent color per day of week, used everywhere a chart breaks data
+// out by day — so "Saturday" is always the same color across every item's
+// chart, every category, every location.
+const DAY_COLORS = {
+  Monday: "#1A1A1A",
+  Tuesday: "#5C0F16",
+  Wednesday: "#8B1A1F",
+  Thursday: "#C41230",
+  Friday: "#E0435A",
+  Saturday: "#EF8080",
+  Sunday: "#F4B8BE",
+};
+
+async function loadWeeksForLocation(loc) {
+  try {
+    const res = await fetch(LOCATION_FILES[loc], { cache: "no-store" });
+    if (!res.ok) return [];
+    const weeks = await res.json();
+    weeks.sort((a, b) => a.date.localeCompare(b.date));
+    return weeks;
+  } catch (e) {
+    return [];
+  }
+}
+
+function Dashboard({ user, onLogout }) {
+  const [location, setLocation] = useState("Edgewood");
+  const [category, setCategory] = useState("Breads");
+  const [activeItems, setActiveItems] = useState(() => new Set(DEFAULT_ACTIVE["Breads"]));
+  const [visibleDays, setVisibleDays] = useState(() => new Set(DAY_ORDER));
+  const toggleDay = (day) => {
+    setVisibleDays((prev) => {
+      const next = new Set(prev);
+      if (next.has(day)) next.delete(day); else next.add(day);
+      return next;
+    });
+  };
+  const [weeks, setWeeks] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      setLoading(true);
+      const w = await loadWeeksForLocation(location);
+      if (!cancelled) { setWeeks(w); setLoading(false); }
+    })();
+    return () => { cancelled = true; };
+  }, [location]);
+
+  const derived = useMemo(() => computeAllDerived(weeks), [weeks]);
+  const hasData = weeks.length > 0;
+
+  const items = hasData ? derived.buckets[category] : null;
+  const itemNames = useMemo(
+    () => items ? Object.keys(items).sort((a, b) => itemTotalVolume(items[b]) - itemTotalVolume(items[a])) : [],
+    [items]
+  );
+
+  const colorForItem = useMemo(() => {
+    const map = {};
+    itemNames.forEach((name, i) => (map[name] = colorForIndex(i)));
+    return map;
+  }, [itemNames]);
+
+  const switchLocation = (loc) => {
+    setLocation(loc);
+    setCategory("Breads");
+    setActiveItems(new Set(DEFAULT_ACTIVE["Breads"]));
+    setSimpleWeek("total");
+  };
+  const switchCategory = (cat) => {
+    setCategory(cat);
+    setActiveItems(new Set(DEFAULT_ACTIVE[cat] || []));
+    setSimpleWeek("total");
+  };
+  const toggleItem = (name) => {
+    setActiveItems((prev) => (prev.has(name) ? new Set() : new Set([name])));
+  };
+
+  const activeList = itemNames.filter((n) => activeItems.has(n));
+  const isSimpleCategory = SIMPLE_CATEGORIES.includes(category);
+  const simpleData = useMemo(
+    () => (isSimpleCategory ? computeSimplePopularity(weeks, category) : { total: [], byWeek: [] }),
+    [weeks, category, isSimpleCategory]
+  );
+  const [simpleWeek, setSimpleWeek] = useState("total");
+  const simpleSelected = simpleWeek === "total" ? simpleData.total : (simpleData.byWeek.find((w) => w.date === simpleWeek) || {}).items || [];
+
+  return React.createElement("div", {
+    style: { background: "#FFFFFF", minHeight: "100vh", padding: "36px 28px 44px", fontFamily: "'Inter', sans-serif", color: "#1A1A1A" }
+  },
+    React.createElement("style", null, `
+      .lq-loc-tab, .lq-cat-tab, .lq-item-chip { transition: all 0.15s ease; }
+      .lq-loc-tab:hover, .lq-cat-tab:hover { transform: translateY(-1px); filter: brightness(1.04); }
+      .lq-item-chip:hover { transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,0.10); }
+      .lq-day-card { transition: box-shadow 0.15s ease, transform 0.15s ease; }
+      .lq-day-card:hover { box-shadow: 0 4px 14px rgba(0,0,0,0.12); transform: translateY(-2px); }
+      .lq-logout:hover { color: #8B1A1F; }
+    `),
+    React.createElement("div", { style: { maxWidth: 1080, margin: "0 auto" } },
+      React.createElement("div", { style: { display: "flex", justifyContent: "flex-end", marginBottom: 10 } },
+        React.createElement("span", { style: { fontSize: 12, color: "#4D4D4D" } },
+          "Signed in as ", React.createElement("strong", { style: { color: "#1A1A1A" } }, user.displayName), " \u00b7 ",
+          React.createElement("span", { className: "lq-logout", onClick: onLogout, style: { color: "#C41230", cursor: "pointer", textDecoration: "underline" } }, "Log out")
+        )
+      ),
+      React.createElement("div", { style: { display: "flex", gap: 8, marginBottom: 20, flexWrap: "wrap" } },
+        LOCATION_NAMES.map((loc) => React.createElement("div", {
+          key: loc, className: "lq-loc-tab", onClick: () => switchLocation(loc),
+          style: {
+            padding: "10px 22px", borderRadius: 10, fontSize: 14, fontWeight: 700, fontFamily: "'Fraunces', serif", cursor: "pointer",
+            background: location === loc ? "#C41230" : "#FFFFFF",
+            color: location === loc ? "#FFFFFF" : "#333333",
+            border: `1.5px solid ${location === loc ? "#C41230" : "#E8B9BC"}`,
+            boxShadow: location === loc ? "0 2px 6px rgba(196,18,48,0.35)" : "none",
+          }
+        }, loc))
+      ),
+      React.createElement("h1", { style: { fontFamily: "'Fraunces', serif", fontWeight: 700, fontSize: 44, lineHeight: 1.1, margin: "0 0 26px", color: "#1A1A1A" } }, location),
+
+      loading ? React.createElement("div", { style: { textAlign: "center", color: "#7A7A7A", padding: "40px 0", fontSize: 13.5 } }, `Loading ${location}'s data\u2026`)
+      : !hasData ? React.createElement("div", {
+          style: { background: "#FFFFFF", border: "1.5px dashed #E8B9BC", borderRadius: 14, padding: "40px 30px", textAlign: "center" }
+        },
+          React.createElement("div", { style: { fontFamily: "'Fraunces', serif", fontWeight: 600, fontSize: 18, color: "#1A1A1A", marginBottom: 8 } }, `No data yet for ${location}`),
+          React.createElement("p", { style: { fontSize: 13.5, color: "#333333", maxWidth: 460, margin: "0 auto", lineHeight: 1.6 } },
+            `Add a data/${location.toLowerCase()}.json file (same format as Edgewood) and push it to the repo to populate this tab.`
+          )
+        )
+      : React.createElement(React.Fragment, null,
+          React.createElement("div", { style: { fontSize: 12.5, color: "#4D4D4D", marginBottom: 18 } }, `${weeks.length} week${weeks.length === 1 ? "" : "s"} of data loaded`),
+
+          React.createElement("div", { style: { display: "flex", gap: 8, marginBottom: 22 } },
+            TAB_CATEGORIES.map((cat) => React.createElement("div", {
+              key: cat, className: "lq-cat-tab", onClick: () => switchCategory(cat),
+              style: {
+                padding: "9px 20px", borderRadius: 999, fontSize: 13.5, fontWeight: 600, fontFamily: "'Fraunces', serif", cursor: "pointer",
+                background: category === cat ? "#1A1A1A" : "#FFFFFF",
+                color: category === cat ? "#FFFFFF" : "#333333",
+                border: `1.5px solid ${category === cat ? "#1A1A1A" : "#E8B9BC"}`,
+              }
+            }, cat))
+          ),
+
+          isSimpleCategory
+            ? simpleData.total.length === 0
+              ? React.createElement("div", {
+                  style: { background: "#FFFFFF", border: "1.5px dashed #E8B9BC", borderRadius: 14, padding: "40px 30px", textAlign: "center" }
+                },
+                  React.createElement("div", { style: { fontFamily: "'Fraunces', serif", fontWeight: 600, fontSize: 17, color: "#1A1A1A", marginBottom: 8 } }, `No ${category} data for ${location}`),
+                  React.createElement("p", { style: { fontSize: 13.5, color: "#333333", maxWidth: 480, margin: "0 auto", lineHeight: 1.6 } },
+                    category === "Breakfast & Lunch"
+                      ? `${location} doesn't tag items as "Breakfast" or "Lunch" in Toast the way Edgewood does — it uses different category names for this kind of menu. Once it's confirmed which of ${location}'s categories are the equivalent, this tab can be filled in the same way.`
+                      : `${location} doesn't have an after-2pm export yet. Once that's pulled from Toast (Product Mix report, hour filter set to 2:00 PM–close), this tab will fill in the same way.`
+                  )
+                )
+              : React.createElement(React.Fragment, null,
+                  React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: 7, marginBottom: 16 } },
+                    React.createElement("div", {
+                      className: "lq-item-chip", onClick: () => setSimpleWeek("total"),
+                      style: {
+                        padding: "6px 14px", borderRadius: 999, fontSize: 12.5, fontWeight: 600, cursor: "pointer",
+                        border: `1.5px solid ${simpleWeek === "total" ? SIMPLE_COLORS[category] : "#E8B9BC"}`,
+                        background: simpleWeek === "total" ? `${SIMPLE_COLORS[category]}1A` : "transparent",
+                        color: simpleWeek === "total" ? "#1A1A1A" : "#7A7A7A",
+                      }
+                    }, "All Weeks (Total)"),
+                    simpleData.byWeek.map((w) => React.createElement("div", {
+                      key: w.date, className: "lq-item-chip", onClick: () => setSimpleWeek(w.date),
+                      style: {
+                        padding: "6px 14px", borderRadius: 999, fontSize: 12.5, fontWeight: 500, cursor: "pointer",
+                        border: `1.5px solid ${simpleWeek === w.date ? SIMPLE_COLORS[category] : "#E8B9BC"}`,
+                        background: simpleWeek === w.date ? `${SIMPLE_COLORS[category]}1A` : "transparent",
+                        color: simpleWeek === w.date ? "#1A1A1A" : "#7A7A7A",
+                      }
+                    }, `Week of ${w.label}`))
+                  ),
+                  React.createElement("div", { style: { background: "#FFFFFF", border: "1px solid #E8B9BC", borderRadius: 14, padding: "20px 20px 8px", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" } },
+                    React.createElement("div", { style: { fontFamily: "'Fraunces', serif", fontWeight: 600, fontSize: 15, color: "#1A1A1A", marginBottom: 2 } }, category === "After 2PM" ? "Most Popular After 2PM" : "Most Popular Items"),
+                    React.createElement("div", { style: { fontSize: 11.5, color: "#666666", marginBottom: 14 } },
+                      simpleWeek === "total"
+                        ? `Total units sold, all ${weeks.length} loaded weeks combined — no day-of-week breakdown available for this category yet.`
+                        : `Units sold the week of ${simpleData.byWeek.find((w) => w.date === simpleWeek)?.label} only.`
+                    ),
+                    simpleSelected.length === 0
+                      ? React.createElement("div", { style: { textAlign: "center", color: "#7A7A7A", padding: "30px 0", fontSize: 12.5 } }, "No items recorded for this week.")
+                      : React.createElement(PopularityBarChart, { items: simpleSelected, color: SIMPLE_COLORS[category] })
+                  )
+                )
+            : React.createElement(React.Fragment, null,
+                React.createElement("div", { style: { background: "#FFFFFF", border: "1px solid #E8B9BC", borderRadius: 14, padding: "18px 20px", marginBottom: 18 } },
+                  React.createElement("div", { style: { fontSize: 12.5, color: "#4D4D4D", marginBottom: 12 } }, `${activeItems.size} of ${itemNames.length} items on the chart.`),
+                  React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: 7 } },
+                    itemNames.map((name) => {
+                      const active = activeItems.has(name);
+                      const color = colorForItem[name];
+                      return React.createElement("div", {
+                        key: name, className: "lq-item-chip", onClick: () => toggleItem(name),
+                        style: {
+                          display: "flex", alignItems: "center", gap: 6, padding: "5px 12px", borderRadius: 999, fontSize: 12, fontWeight: 500, cursor: "pointer",
+                          border: `1.5px solid ${active ? color : "#E8B9BC"}`,
+                          background: active ? `${color}1A` : "transparent",
+                          color: active ? "#1A1A1A" : "#7A7A7A",
+                        }
+                      },
+                        React.createElement("span", { style: { width: 8, height: 8, borderRadius: 99, background: active ? color : "#E8B9BC", display: "inline-block" } }),
+                        name
+                      );
+                    })
+                  )
+                ),
+
+                React.createElement("div", { style: { marginBottom: 4 } },
+                  React.createElement("div", { style: { fontFamily: "'Fraunces', serif", fontWeight: 600, fontSize: 15, color: "#1A1A1A" } }, "3-Week Moving Average — by Item, by Day of Week"),
+                  React.createElement("div", { style: { fontSize: 12, color: "#4D4D4D", marginBottom: 14, maxWidth: 700, lineHeight: 1.5 } },
+                    "The 4-week forecast (low/medium/high) is in the numbers table below each item, not on the chart, to keep these simple."
+                  )
+                ),
+
+                React.createElement("div", { style: { display: "flex", flexWrap: "wrap", alignItems: "center", gap: "6px 10px", marginBottom: 18 } },
+                  React.createElement("span", { style: { fontSize: 11.5, color: "#4D4D4D", fontWeight: 600 } }, "Show days:"),
+                  DAY_ORDER.map((day) => {
+                    const on = visibleDays.has(day);
+                    return React.createElement("div", {
+                      key: day, className: "lq-item-chip", onClick: () => toggleDay(day),
+                      style: {
+                        display: "flex", alignItems: "center", gap: 5, padding: "4px 10px", borderRadius: 999, fontSize: 11.5, fontWeight: 500, cursor: "pointer",
+                        border: `1.5px solid ${on ? DAY_COLORS[day] : "#E8B9BC"}`,
+                        background: on ? `${DAY_COLORS[day]}1A` : "transparent",
+                        color: on ? "#1A1A1A" : "#7A7A7A",
+                      }
+                    },
+                      React.createElement("span", { style: { width: 7, height: 7, borderRadius: 99, background: on ? DAY_COLORS[day] : "#E8B9BC", display: "inline-block" } }),
+                      day.slice(0, 3)
+                    );
+                  })
+                ),
+
+                activeList.length === 0
+                  ? React.createElement("div", { style: { background: "#FFFFFF", border: "1px solid #E8B9BC", borderRadius: 14, textAlign: "center", color: "#7A7A7A", padding: "60px 0", fontSize: 13.5, marginBottom: 22 } }, "Select an item above to see its day-of-week trend.")
+                  : React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 14, marginBottom: 22 } },
+                      activeList.map((name) => React.createElement(ItemDayRow, {
+                        key: name, name, entry: items[name], visibleDays,
+                      }))
+                    ),
+
+                activeList.length > 0 && React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 14 } },
+                  activeList.map((name) => React.createElement(ItemDetailCard, {
+                    key: name, name, entry: items[name], color: colorForItem[name], labels: derived.labels, forecastLabels: derived.forecastLabels
+                  }))
+                )
+              ),
+
+          React.createElement("div", { style: { fontSize: 11, color: "#7A7A7A", marginTop: 26, textAlign: "center" } },
+            `Source: Toast Product Mix (PMIX) exports, ${location} location, weekly Mon\u2013Sun totals. Forecasts use a simple linear trend fit to the available weeks; low/high bands reflect historical week-to-week variability. Bagels are grouped under Pastries.`
+          )
+        )
+    )
+  );
+}
+
+function LoginScreen({ onSuccess }) {
+  const [username, setUsername] = useState("");
+  const [passcode, setPasscode] = useState("");
+  const [error, setError] = useState(null);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const match = CREDENTIALS.find(
+      (c) => c.username.toLowerCase() === username.trim().toLowerCase() && c.passcode === passcode.trim()
+    );
+    if (!match) { setError("Username or passcode didn't match. Please try again."); return; }
+    setError(null);
+    try { localStorage.setItem("lq_authed_user", match.username); } catch (e2) { /* ignore */ }
+    onSuccess(match);
+  };
+
+  return React.createElement("div", {
+    style: { background: "#FFFFFF", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 20px", fontFamily: "'Inter', sans-serif" }
+  },
+    React.createElement("form", {
+      onSubmit: handleSubmit,
+      style: { background: "#FFFFFF", border: "1px solid #E8B9BC", borderRadius: 16, padding: "36px 34px", width: "100%", maxWidth: 340, boxShadow: "0 4px 18px rgba(0,0,0,0.10)" }
+    },
+      React.createElement("div", { style: { fontFamily: "'Fraunces', serif", fontSize: 12.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "#C41230", fontWeight: 600, marginBottom: 6 } }, "Le Quartier"),
+      React.createElement("h1", { style: { fontFamily: "'Fraunces', serif", fontWeight: 700, fontSize: 22, color: "#1A1A1A", margin: "0 0 22px" } }, "Sales Dashboard Login"),
+      React.createElement("label", { style: { fontSize: 12, color: "#4D4D4D", display: "block", marginBottom: 4 } }, "Username"),
+      React.createElement("input", {
+        type: "text", value: username, onChange: (e) => setUsername(e.target.value), autoComplete: "username",
+        style: { width: "100%", boxSizing: "border-box", padding: "9px 12px", marginBottom: 14, borderRadius: 8, border: "1.5px solid #E8B9BC", fontSize: 13.5, color: "#1A1A1A", fontFamily: "'Inter', sans-serif" }
+      }),
+      React.createElement("label", { style: { fontSize: 12, color: "#4D4D4D", display: "block", marginBottom: 4 } }, "Passcode"),
+      React.createElement("input", {
+        type: "password", value: passcode, onChange: (e) => setPasscode(e.target.value), autoComplete: "current-password",
+        style: { width: "100%", boxSizing: "border-box", padding: "9px 12px", marginBottom: 18, borderRadius: 8, border: "1.5px solid #E8B9BC", fontSize: 13.5, color: "#1A1A1A", fontFamily: "'Inter', sans-serif" }
+      }),
+      error && React.createElement("div", { style: { fontSize: 12.5, color: "#B3261E", marginBottom: 14 } }, error),
+      React.createElement("button", {
+        type: "submit",
+        style: { width: "100%", padding: "10px 0", borderRadius: 8, border: "none", background: "#C41230", color: "#FFFFFF", fontWeight: 600, fontSize: 14, fontFamily: "'Fraunces', serif", cursor: "pointer" }
+      }, "Log In")
+    )
+  );
+}
+
+function AuthGate() {
+  const [checked, setChecked] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    let savedUsername = null;
+    try { savedUsername = localStorage.getItem("lq_authed_user"); } catch (e) { /* ignore */ }
+    const match = savedUsername ? CREDENTIALS.find((c) => c.username === savedUsername) : null;
+    setUser(match || null);
+    setChecked(true);
+  }, []);
+
+  const handleLogout = () => {
+    try { localStorage.removeItem("lq_authed_user"); } catch (e) { /* ignore */ }
+    setUser(null);
+  };
+
+  if (!checked) {
+    return React.createElement("div", { style: { background: "#FFFFFF", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" } },
+      React.createElement("span", { style: { color: "#7A7A7A", fontFamily: "'Inter', sans-serif", fontSize: 13.5 } }, "Loading\u2026")
+    );
+  }
+  if (!user) return React.createElement(LoginScreen, { onSuccess: (u) => setUser(u) });
+  return React.createElement(Dashboard, { user, onLogout: handleLogout });
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(React.createElement(AuthGate));
