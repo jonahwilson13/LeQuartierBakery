@@ -1,0 +1,846 @@
+[
+  {
+    "date": "2026-06-22",
+    "day": "Mon",
+    "hours": {
+      "16": {
+        "net_sales": 128.5,
+        "orders": 16,
+        "guests": 16
+      },
+      "15": {
+        "net_sales": 170.25,
+        "orders": 13,
+        "guests": 13
+      },
+      "9": {
+        "net_sales": 335.25,
+        "orders": 24,
+        "guests": 24
+      },
+      "10": {
+        "net_sales": 620.25,
+        "orders": 32,
+        "guests": 32
+      },
+      "17": {
+        "net_sales": 29.0,
+        "orders": 3,
+        "guests": 3
+      },
+      "13": {
+        "net_sales": 341.0,
+        "orders": 28,
+        "guests": 28
+      },
+      "7": {
+        "net_sales": 208.5,
+        "orders": 7,
+        "guests": 7
+      },
+      "14": {
+        "net_sales": 186.6,
+        "orders": 14,
+        "guests": 14
+      },
+      "8": {
+        "net_sales": 162.0,
+        "orders": 14,
+        "guests": 14
+      },
+      "12": {
+        "net_sales": 594.0,
+        "orders": 31,
+        "guests": 31
+      },
+      "11": {
+        "net_sales": 457.0,
+        "orders": 20,
+        "guests": 20
+      }
+    }
+  },
+  {
+    "date": "2026-06-23",
+    "day": "Tue",
+    "hours": {
+      "7": {
+        "net_sales": 73.0,
+        "orders": 3,
+        "guests": 3
+      },
+      "9": {
+        "net_sales": 160.25,
+        "orders": 11,
+        "guests": 11
+      },
+      "12": {
+        "net_sales": 618.25,
+        "orders": 27,
+        "guests": 27
+      },
+      "16": {
+        "net_sales": 96.9,
+        "orders": 12,
+        "guests": 12
+      },
+      "14": {
+        "net_sales": 387.55,
+        "orders": 22,
+        "guests": 22
+      },
+      "15": {
+        "net_sales": 279.85,
+        "orders": 22,
+        "guests": 22
+      },
+      "17": {
+        "net_sales": 147.2,
+        "orders": 5,
+        "guests": 5
+      },
+      "10": {
+        "net_sales": 535.4,
+        "orders": 30,
+        "guests": 30
+      },
+      "6": {
+        "net_sales": 32.0,
+        "orders": 1,
+        "guests": 1
+      },
+      "13": {
+        "net_sales": 421.7,
+        "orders": 25,
+        "guests": 25
+      },
+      "8": {
+        "net_sales": 205.5,
+        "orders": 12,
+        "guests": 12
+      },
+      "11": {
+        "net_sales": 397.75,
+        "orders": 19,
+        "guests": 19
+      }
+    }
+  },
+  {
+    "date": "2026-06-24",
+    "day": "Wed",
+    "hours": {
+      "7": {
+        "net_sales": 105.25,
+        "orders": 5,
+        "guests": 5
+      },
+      "12": {
+        "net_sales": 700.25,
+        "orders": 37,
+        "guests": 37
+      },
+      "13": {
+        "net_sales": 442.75,
+        "orders": 27,
+        "guests": 27
+      },
+      "15": {
+        "net_sales": 119.8,
+        "orders": 12,
+        "guests": 12
+      },
+      "9": {
+        "net_sales": 407.75,
+        "orders": 25,
+        "guests": 25
+      },
+      "10": {
+        "net_sales": 402.0,
+        "orders": 31,
+        "guests": 31
+      },
+      "14": {
+        "net_sales": 298.44,
+        "orders": 19,
+        "guests": 19
+      },
+      "17": {
+        "net_sales": 38.15,
+        "orders": 4,
+        "guests": 4
+      },
+      "11": {
+        "net_sales": 685.0,
+        "orders": 34,
+        "guests": 34
+      },
+      "16": {
+        "net_sales": 169.25,
+        "orders": 11,
+        "guests": 11
+      },
+      "8": {
+        "net_sales": 161.75,
+        "orders": 8,
+        "guests": 8
+      }
+    }
+  },
+  {
+    "date": "2026-06-25",
+    "day": "Thu",
+    "hours": {
+      "14": {
+        "net_sales": 242.6,
+        "orders": 16,
+        "guests": 16
+      },
+      "8": {
+        "net_sales": 244.75,
+        "orders": 13,
+        "guests": 13
+      },
+      "7": {
+        "net_sales": 74.25,
+        "orders": 6,
+        "guests": 6
+      },
+      "11": {
+        "net_sales": 684.0,
+        "orders": 46,
+        "guests": 46
+      },
+      "13": {
+        "net_sales": 344.6,
+        "orders": 26,
+        "guests": 26
+      },
+      "17": {
+        "net_sales": 48.35,
+        "orders": 7,
+        "guests": 7
+      },
+      "9": {
+        "net_sales": 234.75,
+        "orders": 17,
+        "guests": 17
+      },
+      "12": {
+        "net_sales": 646.0,
+        "orders": 38,
+        "guests": 38
+      },
+      "15": {
+        "net_sales": 266.4,
+        "orders": 17,
+        "guests": 17
+      },
+      "16": {
+        "net_sales": 163.7,
+        "orders": 13,
+        "guests": 13
+      },
+      "6": {
+        "net_sales": 104.0,
+        "orders": 1,
+        "guests": 1
+      },
+      "10": {
+        "net_sales": 322.25,
+        "orders": 20,
+        "guests": 20
+      }
+    }
+  },
+  {
+    "date": "2026-06-26",
+    "day": "Fri",
+    "hours": {
+      "7": {
+        "net_sales": 91.25,
+        "orders": 9,
+        "guests": 9
+      },
+      "13": {
+        "net_sales": 712.83,
+        "orders": 33,
+        "guests": 33
+      },
+      "12": {
+        "net_sales": 775.2,
+        "orders": 33,
+        "guests": 33
+      },
+      "15": {
+        "net_sales": 202.3,
+        "orders": 14,
+        "guests": 14
+      },
+      "10": {
+        "net_sales": 601.75,
+        "orders": 31,
+        "guests": 31
+      },
+      "16": {
+        "net_sales": 213.3,
+        "orders": 12,
+        "guests": 12
+      },
+      "8": {
+        "net_sales": 276.75,
+        "orders": 16,
+        "guests": 16
+      },
+      "9": {
+        "net_sales": 503.0,
+        "orders": 27,
+        "guests": 27
+      },
+      "17": {
+        "net_sales": 138.6,
+        "orders": 6,
+        "guests": 6
+      },
+      "11": {
+        "net_sales": 931.0,
+        "orders": 44,
+        "guests": 44
+      },
+      "14": {
+        "net_sales": 408.5,
+        "orders": 27,
+        "guests": 27
+      },
+      "6": {
+        "net_sales": 7.0,
+        "orders": 1,
+        "guests": 1
+      }
+    }
+  },
+  {
+    "date": "2026-06-27",
+    "day": "Sat",
+    "hours": {
+      "8": {
+        "net_sales": 474.75,
+        "orders": 30,
+        "guests": 30
+      },
+      "15": {
+        "net_sales": 290.92,
+        "orders": 19,
+        "guests": 19
+      },
+      "7": {
+        "net_sales": 189.5,
+        "orders": 1,
+        "guests": 1
+      },
+      "14": {
+        "net_sales": 355.0,
+        "orders": 17,
+        "guests": 17
+      },
+      "12": {
+        "net_sales": 794.75,
+        "orders": 35,
+        "guests": 35
+      },
+      "13": {
+        "net_sales": 439.13,
+        "orders": 24,
+        "guests": 24
+      },
+      "9": {
+        "net_sales": 1141.1,
+        "orders": 44,
+        "guests": 44
+      },
+      "10": {
+        "net_sales": 515.25,
+        "orders": 33,
+        "guests": 33
+      },
+      "11": {
+        "net_sales": 1209.5,
+        "orders": 50,
+        "guests": 50
+      }
+    }
+  },
+  {
+    "date": "2026-06-28",
+    "day": "Sun",
+    "hours": {
+      "9": {
+        "net_sales": 1312.0,
+        "orders": 103,
+        "guests": 103
+      },
+      "8": {
+        "net_sales": 727.05,
+        "orders": 28,
+        "guests": 28
+      },
+      "14": {
+        "net_sales": 278.0,
+        "orders": 15,
+        "guests": 15
+      },
+      "7": {
+        "net_sales": 51.5,
+        "orders": 1,
+        "guests": 1
+      },
+      "11": {
+        "net_sales": 1166.05,
+        "orders": 78,
+        "guests": 78
+      },
+      "10": {
+        "net_sales": 1427.65,
+        "orders": 116,
+        "guests": 116
+      },
+      "12": {
+        "net_sales": 455.75,
+        "orders": 25,
+        "guests": 25
+      },
+      "13": {
+        "net_sales": 499.3,
+        "orders": 31,
+        "guests": 31
+      },
+      "15": {
+        "net_sales": 177.75,
+        "orders": 10,
+        "guests": 10
+      }
+    }
+  },
+  {
+    "date": "2026-07-06",
+    "day": "Mon",
+    "hours": {
+      "16": {
+        "net_sales": 147.35,
+        "orders": 14,
+        "guests": 14
+      },
+      "17": {
+        "net_sales": 36.0,
+        "orders": 2,
+        "guests": 2
+      },
+      "10": {
+        "net_sales": 209.35,
+        "orders": 14,
+        "guests": 14
+      },
+      "8": {
+        "net_sales": 236.6,
+        "orders": 14,
+        "guests": 14
+      },
+      "9": {
+        "net_sales": 211.0,
+        "orders": 13,
+        "guests": 13
+      },
+      "13": {
+        "net_sales": 266.0,
+        "orders": 15,
+        "guests": 15
+      },
+      "15": {
+        "net_sales": 140.35,
+        "orders": 11,
+        "guests": 11
+      },
+      "7": {
+        "net_sales": 47.0,
+        "orders": 3,
+        "guests": 3
+      },
+      "12": {
+        "net_sales": 390.25,
+        "orders": 27,
+        "guests": 27
+      },
+      "11": {
+        "net_sales": 550.75,
+        "orders": 36,
+        "guests": 36
+      },
+      "14": {
+        "net_sales": 365.8,
+        "orders": 18,
+        "guests": 18
+      }
+    }
+  },
+  {
+    "date": "2026-07-07",
+    "day": "Tue",
+    "hours": {
+      "14": {
+        "net_sales": 353.25,
+        "orders": 22,
+        "guests": 22
+      },
+      "11": {
+        "net_sales": 459.0,
+        "orders": 31,
+        "guests": 31
+      },
+      "10": {
+        "net_sales": 564.25,
+        "orders": 36,
+        "guests": 36
+      },
+      "16": {
+        "net_sales": 87.8,
+        "orders": 10,
+        "guests": 10
+      },
+      "13": {
+        "net_sales": 415.05,
+        "orders": 12,
+        "guests": 12
+      },
+      "7": {
+        "net_sales": 126.98,
+        "orders": 9,
+        "guests": 9
+      },
+      "6": {
+        "net_sales": 12.25,
+        "orders": 1,
+        "guests": 1
+      },
+      "15": {
+        "net_sales": 175.25,
+        "orders": 15,
+        "guests": 15
+      },
+      "9": {
+        "net_sales": 262.47,
+        "orders": 18,
+        "guests": 18
+      },
+      "17": {
+        "net_sales": 77.0,
+        "orders": 6,
+        "guests": 6
+      },
+      "8": {
+        "net_sales": 261.25,
+        "orders": 13,
+        "guests": 13
+      },
+      "12": {
+        "net_sales": 369.25,
+        "orders": 24,
+        "guests": 24
+      }
+    }
+  },
+  {
+    "date": "2026-07-08",
+    "day": "Wed",
+    "hours": {
+      "16": {
+        "net_sales": 195.05,
+        "orders": 17,
+        "guests": 17
+      },
+      "13": {
+        "net_sales": 473.0,
+        "orders": 34,
+        "guests": 34
+      },
+      "17": {
+        "net_sales": 41.95,
+        "orders": 4,
+        "guests": 4
+      },
+      "9": {
+        "net_sales": 266.75,
+        "orders": 13,
+        "guests": 13
+      },
+      "15": {
+        "net_sales": 207.55,
+        "orders": 16,
+        "guests": 16
+      },
+      "14": {
+        "net_sales": 296.8,
+        "orders": 17,
+        "guests": 17
+      },
+      "10": {
+        "net_sales": 399.25,
+        "orders": 27,
+        "guests": 27
+      },
+      "8": {
+        "net_sales": 186.75,
+        "orders": 10,
+        "guests": 10
+      },
+      "11": {
+        "net_sales": 902.0,
+        "orders": 33,
+        "guests": 50
+      },
+      "7": {
+        "net_sales": 176.5,
+        "orders": 12,
+        "guests": 12
+      },
+      "12": {
+        "net_sales": 588.75,
+        "orders": 31,
+        "guests": 31
+      }
+    }
+  },
+  {
+    "date": "2026-07-09",
+    "day": "Thu",
+    "hours": {
+      "7": {
+        "net_sales": 159.55,
+        "orders": 10,
+        "guests": 10
+      },
+      "13": {
+        "net_sales": 285.35,
+        "orders": 22,
+        "guests": 22
+      },
+      "6": {
+        "net_sales": 6.75,
+        "orders": 1,
+        "guests": 1
+      },
+      "15": {
+        "net_sales": 246.75,
+        "orders": 13,
+        "guests": 13
+      },
+      "8": {
+        "net_sales": 242.25,
+        "orders": 17,
+        "guests": 17
+      },
+      "16": {
+        "net_sales": 183.5,
+        "orders": 14,
+        "guests": 14
+      },
+      "17": {
+        "net_sales": 60.85,
+        "orders": 7,
+        "guests": 7
+      },
+      "10": {
+        "net_sales": 515.55,
+        "orders": 30,
+        "guests": 30
+      },
+      "14": {
+        "net_sales": 172.35,
+        "orders": 13,
+        "guests": 13
+      },
+      "9": {
+        "net_sales": 371.97,
+        "orders": 21,
+        "guests": 21
+      },
+      "12": {
+        "net_sales": 523.2,
+        "orders": 33,
+        "guests": 33
+      },
+      "11": {
+        "net_sales": 638.25,
+        "orders": 43,
+        "guests": 43
+      }
+    }
+  },
+  {
+    "date": "2026-07-10",
+    "day": "Fri",
+    "hours": {
+      "11": {
+        "net_sales": 790.5,
+        "orders": 47,
+        "guests": 47
+      },
+      "15": {
+        "net_sales": 265.65,
+        "orders": 15,
+        "guests": 15
+      },
+      "16": {
+        "net_sales": 107.45,
+        "orders": 9,
+        "guests": 9
+      },
+      "17": {
+        "net_sales": 64.9,
+        "orders": 4,
+        "guests": 4
+      },
+      "14": {
+        "net_sales": 248.85,
+        "orders": 15,
+        "guests": 15
+      },
+      "9": {
+        "net_sales": 394.25,
+        "orders": 24,
+        "guests": 24
+      },
+      "7": {
+        "net_sales": 141.75,
+        "orders": 8,
+        "guests": 8
+      },
+      "8": {
+        "net_sales": 577.25,
+        "orders": 29,
+        "guests": 29
+      },
+      "13": {
+        "net_sales": 488.25,
+        "orders": 31,
+        "guests": 31
+      },
+      "6": {
+        "net_sales": 32.0,
+        "orders": 1,
+        "guests": 1
+      },
+      "12": {
+        "net_sales": 773.85,
+        "orders": 44,
+        "guests": 44
+      },
+      "10": {
+        "net_sales": 277.0,
+        "orders": 21,
+        "guests": 21
+      }
+    }
+  },
+  {
+    "date": "2026-07-11",
+    "day": "Sat",
+    "hours": {
+      "7": {
+        "net_sales": 28.6,
+        "orders": 2,
+        "guests": 2
+      },
+      "13": {
+        "net_sales": 416.29,
+        "orders": 26,
+        "guests": 26
+      },
+      "10": {
+        "net_sales": 1014.25,
+        "orders": 46,
+        "guests": 46
+      },
+      "14": {
+        "net_sales": 247.0,
+        "orders": 21,
+        "guests": 21
+      },
+      "9": {
+        "net_sales": 463.5,
+        "orders": 28,
+        "guests": 28
+      },
+      "15": {
+        "net_sales": 284.0,
+        "orders": 17,
+        "guests": 17
+      },
+      "12": {
+        "net_sales": 712.8,
+        "orders": 40,
+        "guests": 40
+      },
+      "11": {
+        "net_sales": 787.5,
+        "orders": 46,
+        "guests": 46
+      },
+      "8": {
+        "net_sales": 527.6,
+        "orders": 25,
+        "guests": 25
+      }
+    }
+  },
+  {
+    "date": "2026-07-12",
+    "day": "Sun",
+    "hours": {
+      "15": {
+        "net_sales": 100.0,
+        "orders": 5,
+        "guests": 5
+      },
+      "7": {
+        "net_sales": 50.0,
+        "orders": 1,
+        "guests": 1
+      },
+      "8": {
+        "net_sales": 515.0,
+        "orders": 28,
+        "guests": 28
+      },
+      "9": {
+        "net_sales": 1631.75,
+        "orders": 109,
+        "guests": 109
+      },
+      "12": {
+        "net_sales": 630.5,
+        "orders": 38,
+        "guests": 38
+      },
+      "13": {
+        "net_sales": 451.75,
+        "orders": 22,
+        "guests": 22
+      },
+      "14": {
+        "net_sales": 315.42,
+        "orders": 14,
+        "guests": 14
+      },
+      "10": {
+        "net_sales": 1383.75,
+        "orders": 118,
+        "guests": 118
+      },
+      "11": {
+        "net_sales": 1153.75,
+        "orders": 78,
+        "guests": 78
+      }
+    }
+  }
+]
