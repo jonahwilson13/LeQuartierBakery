@@ -1,0 +1,1410 @@
+[
+  {
+    "canonicalItems": [
+      "Baguette"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Monday": {
+        "weeksTracked": 21,
+        "avgOrder": 16.57,
+        "avgWaste": 2.14,
+        "sellOutWeeks": 0
+      },
+      "Tuesday": {
+        "weeksTracked": 22,
+        "avgOrder": 16.77,
+        "avgWaste": 3.09,
+        "sellOutWeeks": 0
+      },
+      "Wednesday": {
+        "weeksTracked": 22,
+        "avgOrder": 17.45,
+        "avgWaste": 2.14,
+        "sellOutWeeks": 0
+      },
+      "Thursday": {
+        "weeksTracked": 22,
+        "avgOrder": 20.18,
+        "avgWaste": 3.64,
+        "sellOutWeeks": 0
+      },
+      "Friday": {
+        "weeksTracked": 22,
+        "avgOrder": 23.18,
+        "avgWaste": 1.64,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 22,
+        "avgOrder": 25.5,
+        "avgWaste": 3.77,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 21,
+        "avgOrder": 20.95,
+        "avgWaste": 2.0,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Parisian"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Monday": {
+        "weeksTracked": 21,
+        "avgOrder": 7.33,
+        "avgWaste": 1.76,
+        "sellOutWeeks": 0
+      },
+      "Tuesday": {
+        "weeksTracked": 22,
+        "avgOrder": 7.36,
+        "avgWaste": 1.09,
+        "sellOutWeeks": 0
+      },
+      "Wednesday": {
+        "weeksTracked": 22,
+        "avgOrder": 7.55,
+        "avgWaste": 1.73,
+        "sellOutWeeks": 0
+      },
+      "Thursday": {
+        "weeksTracked": 22,
+        "avgOrder": 9.55,
+        "avgWaste": 1.64,
+        "sellOutWeeks": 0
+      },
+      "Friday": {
+        "weeksTracked": 22,
+        "avgOrder": 11.64,
+        "avgWaste": 2.36,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 22,
+        "avgOrder": 12.0,
+        "avgWaste": 1.95,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 21,
+        "avgOrder": 9.71,
+        "avgWaste": 1.48,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "White Sourdough",
+      "White Sourdough Half"
+    ],
+    "weight": {
+      "White Sourdough Half": 0.5
+    },
+    "seasonalPick": false,
+    "days": {
+      "Monday": {
+        "weeksTracked": 21,
+        "avgOrder": 32.76,
+        "avgWaste": 2.76,
+        "sellOutWeeks": 0
+      },
+      "Tuesday": {
+        "weeksTracked": 22,
+        "avgOrder": 32.36,
+        "avgWaste": 3.48,
+        "sellOutWeeks": 0
+      },
+      "Wednesday": {
+        "weeksTracked": 22,
+        "avgOrder": 32.41,
+        "avgWaste": 3.39,
+        "sellOutWeeks": 0
+      },
+      "Thursday": {
+        "weeksTracked": 22,
+        "avgOrder": 33.73,
+        "avgWaste": 2.84,
+        "sellOutWeeks": 0
+      },
+      "Friday": {
+        "weeksTracked": 22,
+        "avgOrder": 35.68,
+        "avgWaste": 2.11,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 22,
+        "avgOrder": 42.82,
+        "avgWaste": 1.84,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 21,
+        "avgOrder": 35.19,
+        "avgWaste": 2.55,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Whole Wheat Sourdough",
+      "Whole Wheat Sourdough Half"
+    ],
+    "weight": {
+      "Whole Wheat Sourdough Half": 0.5
+    },
+    "seasonalPick": false,
+    "days": {
+      "Monday": {
+        "weeksTracked": 21,
+        "avgOrder": 10.62,
+        "avgWaste": 0.93,
+        "sellOutWeeks": 0
+      },
+      "Tuesday": {
+        "weeksTracked": 22,
+        "avgOrder": 10.41,
+        "avgWaste": 2.05,
+        "sellOutWeeks": 0
+      },
+      "Wednesday": {
+        "weeksTracked": 22,
+        "avgOrder": 10.23,
+        "avgWaste": 1.77,
+        "sellOutWeeks": 0
+      },
+      "Thursday": {
+        "weeksTracked": 22,
+        "avgOrder": 11.0,
+        "avgWaste": 1.89,
+        "sellOutWeeks": 0
+      },
+      "Friday": {
+        "weeksTracked": 22,
+        "avgOrder": 12.73,
+        "avgWaste": 1.8,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 22,
+        "avgOrder": 13.36,
+        "avgWaste": 1.52,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 21,
+        "avgOrder": 11.43,
+        "avgWaste": 1.14,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Rustic Sourdough",
+      "Rustic  Sourdough",
+      "Rustic Sourdough Half"
+    ],
+    "weight": {
+      "Rustic Sourdough Half": 0.5
+    },
+    "seasonalPick": false,
+    "days": {
+      "Monday": {
+        "weeksTracked": 21,
+        "avgOrder": 10.62,
+        "avgWaste": 1.88,
+        "sellOutWeeks": 0
+      },
+      "Tuesday": {
+        "weeksTracked": 22,
+        "avgOrder": 11.82,
+        "avgWaste": 0.91,
+        "sellOutWeeks": 0
+      },
+      "Wednesday": {
+        "weeksTracked": 22,
+        "avgOrder": 10.27,
+        "avgWaste": 1.48,
+        "sellOutWeeks": 0
+      },
+      "Thursday": {
+        "weeksTracked": 22,
+        "avgOrder": 10.36,
+        "avgWaste": 1.36,
+        "sellOutWeeks": 0
+      },
+      "Friday": {
+        "weeksTracked": 22,
+        "avgOrder": 15.18,
+        "avgWaste": 1.91,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 22,
+        "avgOrder": 15.55,
+        "avgWaste": 1.8,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 21,
+        "avgOrder": 11.14,
+        "avgWaste": 0.64,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Cheddar Loaf"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Monday": {
+        "weeksTracked": 21,
+        "avgOrder": 15.43,
+        "avgWaste": 4.05,
+        "sellOutWeeks": 0
+      },
+      "Wednesday": {
+        "weeksTracked": 22,
+        "avgOrder": 16.55,
+        "avgWaste": 3.86,
+        "sellOutWeeks": 0
+      },
+      "Friday": {
+        "weeksTracked": 22,
+        "avgOrder": 12.77,
+        "avgWaste": 1.95,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 22,
+        "avgOrder": 15.82,
+        "avgWaste": 2.36,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 21,
+        "avgOrder": 11.76,
+        "avgWaste": 0.9,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Kalamata Olive Rosemary Sourdough"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Tuesday": {
+        "weeksTracked": 22,
+        "avgOrder": 10.0,
+        "avgWaste": 3.23,
+        "sellOutWeeks": 0
+      },
+      "Thursday": {
+        "weeksTracked": 22,
+        "avgOrder": 10.45,
+        "avgWaste": 1.27,
+        "sellOutWeeks": 0
+      },
+      "Friday": {
+        "weeksTracked": 22,
+        "avgOrder": 9.32,
+        "avgWaste": 2.18,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 22,
+        "avgOrder": 11.23,
+        "avgWaste": 3.27,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 21,
+        "avgOrder": 9.9,
+        "avgWaste": 2.05,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Apple Pecan Sourdough"
+    ],
+    "weight": {},
+    "seasonalPick": true,
+    "days": {
+      "Friday": {
+        "weeksTracked": 22,
+        "avgOrder": 8.0,
+        "avgWaste": 1.36,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 22,
+        "avgOrder": 9.45,
+        "avgWaste": 0.95,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 21,
+        "avgOrder": 7.52,
+        "avgWaste": 1.86,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Blue Cheese Loaf"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Saturday": {
+        "weeksTracked": 22,
+        "avgOrder": 16.05,
+        "avgWaste": 4.41,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Multigrain Pan Loaf"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Monday": {
+        "weeksTracked": 21,
+        "avgOrder": 9.81,
+        "avgWaste": 1.29,
+        "sellOutWeeks": 0
+      },
+      "Tuesday": {
+        "weeksTracked": 22,
+        "avgOrder": 9.27,
+        "avgWaste": 1.5,
+        "sellOutWeeks": 0
+      },
+      "Wednesday": {
+        "weeksTracked": 22,
+        "avgOrder": 9.36,
+        "avgWaste": 1.73,
+        "sellOutWeeks": 0
+      },
+      "Thursday": {
+        "weeksTracked": 22,
+        "avgOrder": 9.55,
+        "avgWaste": 1.32,
+        "sellOutWeeks": 0
+      },
+      "Friday": {
+        "weeksTracked": 22,
+        "avgOrder": 10.77,
+        "avgWaste": 2.27,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 21,
+        "avgOrder": 10.29,
+        "avgWaste": 1.1,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 21,
+        "avgOrder": 9.9,
+        "avgWaste": 2.43,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Brioche Pan Loaf"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Monday": {
+        "weeksTracked": 19,
+        "avgOrder": 2.95,
+        "avgWaste": 0.68,
+        "sellOutWeeks": 0
+      },
+      "Tuesday": {
+        "weeksTracked": 20,
+        "avgOrder": 2.95,
+        "avgWaste": 0.75,
+        "sellOutWeeks": 0
+      },
+      "Wednesday": {
+        "weeksTracked": 20,
+        "avgOrder": 2.95,
+        "avgWaste": 0.5,
+        "sellOutWeeks": 0
+      },
+      "Thursday": {
+        "weeksTracked": 20,
+        "avgOrder": 2.95,
+        "avgWaste": 0.55,
+        "sellOutWeeks": 0
+      },
+      "Friday": {
+        "weeksTracked": 20,
+        "avgOrder": 3.8,
+        "avgWaste": 0.75,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 20,
+        "avgOrder": 5.7,
+        "avgWaste": 1.5,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 20,
+        "avgOrder": 3.9,
+        "avgWaste": 0.9,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Pizza Crust"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Tuesday": {
+        "weeksTracked": 13,
+        "avgOrder": 8.0,
+        "avgWaste": 2.85,
+        "sellOutWeeks": 0
+      },
+      "Wednesday": {
+        "weeksTracked": 13,
+        "avgOrder": 8.0,
+        "avgWaste": 3.23,
+        "sellOutWeeks": 0
+      },
+      "Thursday": {
+        "weeksTracked": 13,
+        "avgOrder": 8.0,
+        "avgWaste": 3.54,
+        "sellOutWeeks": 0
+      },
+      "Friday": {
+        "weeksTracked": 13,
+        "avgOrder": 8.31,
+        "avgWaste": 3.77,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 13,
+        "avgOrder": 20.69,
+        "avgWaste": 11.92,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Ciabatta Roll 6-Pack"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Tuesday": {
+        "weeksTracked": 22,
+        "avgOrder": 3.27,
+        "avgWaste": 1.36,
+        "sellOutWeeks": 0
+      },
+      "Wednesday": {
+        "weeksTracked": 8,
+        "avgOrder": 2.0,
+        "avgWaste": 0.75,
+        "sellOutWeeks": 0
+      },
+      "Thursday": {
+        "weeksTracked": 22,
+        "avgOrder": 4.09,
+        "avgWaste": 2.45,
+        "sellOutWeeks": 0
+      },
+      "Friday": {
+        "weeksTracked": 8,
+        "avgOrder": 4.88,
+        "avgWaste": 0.75,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 22,
+        "avgOrder": 8.45,
+        "avgWaste": 4.59,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Home on the Prairie"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Saturday": {
+        "weeksTracked": 22,
+        "avgOrder": 4.36,
+        "avgWaste": 2.32,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Everything Bagel",
+      "Sesame Bagel"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Saturday": {
+        "weeksTracked": 14,
+        "avgOrder": 23.43,
+        "avgWaste": 4.57,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 14,
+        "avgOrder": 22.0,
+        "avgWaste": 5.14,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Croissant"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Monday": {
+        "weeksTracked": 21,
+        "avgOrder": 82.24,
+        "avgWaste": 26.43,
+        "sellOutWeeks": 0
+      },
+      "Tuesday": {
+        "weeksTracked": 22,
+        "avgOrder": 82.5,
+        "avgWaste": 27.0,
+        "sellOutWeeks": 0
+      },
+      "Wednesday": {
+        "weeksTracked": 22,
+        "avgOrder": 85.0,
+        "avgWaste": 23.41,
+        "sellOutWeeks": 0
+      },
+      "Thursday": {
+        "weeksTracked": 22,
+        "avgOrder": 92.0,
+        "avgWaste": 33.23,
+        "sellOutWeeks": 0
+      },
+      "Friday": {
+        "weeksTracked": 22,
+        "avgOrder": 105.0,
+        "avgWaste": 32.86,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 22,
+        "avgOrder": 125.0,
+        "avgWaste": 25.5,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 21,
+        "avgOrder": 91.14,
+        "avgWaste": 18.95,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Pain au Chocolat"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Monday": {
+        "weeksTracked": 21,
+        "avgOrder": 39.43,
+        "avgWaste": 17.0,
+        "sellOutWeeks": 0
+      },
+      "Tuesday": {
+        "weeksTracked": 22,
+        "avgOrder": 45.27,
+        "avgWaste": 19.68,
+        "sellOutWeeks": 0
+      },
+      "Wednesday": {
+        "weeksTracked": 22,
+        "avgOrder": 47.45,
+        "avgWaste": 20.23,
+        "sellOutWeeks": 0
+      },
+      "Thursday": {
+        "weeksTracked": 22,
+        "avgOrder": 50.32,
+        "avgWaste": 21.41,
+        "sellOutWeeks": 0
+      },
+      "Friday": {
+        "weeksTracked": 22,
+        "avgOrder": 65.05,
+        "avgWaste": 29.0,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 22,
+        "avgOrder": 74.18,
+        "avgWaste": 21.27,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 21,
+        "avgOrder": 59.57,
+        "avgWaste": 17.33,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Almond Croissant"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Monday": {
+        "weeksTracked": 21,
+        "avgOrder": 20.86,
+        "avgWaste": 3.81,
+        "sellOutWeeks": 0
+      },
+      "Tuesday": {
+        "weeksTracked": 22,
+        "avgOrder": 20.45,
+        "avgWaste": 3.27,
+        "sellOutWeeks": 0
+      },
+      "Wednesday": {
+        "weeksTracked": 22,
+        "avgOrder": 20.73,
+        "avgWaste": 1.86,
+        "sellOutWeeks": 0
+      },
+      "Thursday": {
+        "weeksTracked": 22,
+        "avgOrder": 21.82,
+        "avgWaste": 3.55,
+        "sellOutWeeks": 0
+      },
+      "Friday": {
+        "weeksTracked": 22,
+        "avgOrder": 26.86,
+        "avgWaste": 3.45,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 22,
+        "avgOrder": 32.86,
+        "avgWaste": 4.59,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 21,
+        "avgOrder": 27.9,
+        "avgWaste": 2.33,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Chocolate Almond Croissant"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Monday": {
+        "weeksTracked": 21,
+        "avgOrder": 15.95,
+        "avgWaste": 2.43,
+        "sellOutWeeks": 0
+      },
+      "Tuesday": {
+        "weeksTracked": 22,
+        "avgOrder": 16.95,
+        "avgWaste": 2.18,
+        "sellOutWeeks": 0
+      },
+      "Wednesday": {
+        "weeksTracked": 22,
+        "avgOrder": 17.5,
+        "avgWaste": 2.09,
+        "sellOutWeeks": 0
+      },
+      "Thursday": {
+        "weeksTracked": 22,
+        "avgOrder": 17.95,
+        "avgWaste": 2.23,
+        "sellOutWeeks": 0
+      },
+      "Friday": {
+        "weeksTracked": 22,
+        "avgOrder": 22.73,
+        "avgWaste": 2.5,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 22,
+        "avgOrder": 25.55,
+        "avgWaste": 3.27,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 21,
+        "avgOrder": 25.29,
+        "avgWaste": 1.05,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Pain aux Raisin"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Monday": {
+        "weeksTracked": 21,
+        "avgOrder": 9.71,
+        "avgWaste": 0.95,
+        "sellOutWeeks": 0
+      },
+      "Tuesday": {
+        "weeksTracked": 21,
+        "avgOrder": 9.62,
+        "avgWaste": 0.9,
+        "sellOutWeeks": 0
+      },
+      "Wednesday": {
+        "weeksTracked": 22,
+        "avgOrder": 9.64,
+        "avgWaste": 1.14,
+        "sellOutWeeks": 0
+      },
+      "Thursday": {
+        "weeksTracked": 22,
+        "avgOrder": 10.0,
+        "avgWaste": 1.0,
+        "sellOutWeeks": 0
+      },
+      "Friday": {
+        "weeksTracked": 22,
+        "avgOrder": 10.18,
+        "avgWaste": 1.23,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 22,
+        "avgOrder": 15.0,
+        "avgWaste": 1.59,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 21,
+        "avgOrder": 12.48,
+        "avgWaste": 2.29,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Mixed Berry Danish"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Monday": {
+        "weeksTracked": 20,
+        "avgOrder": 30.3,
+        "avgWaste": 3.75,
+        "sellOutWeeks": 0
+      },
+      "Tuesday": {
+        "weeksTracked": 21,
+        "avgOrder": 31.14,
+        "avgWaste": 3.33,
+        "sellOutWeeks": 0
+      },
+      "Wednesday": {
+        "weeksTracked": 21,
+        "avgOrder": 32.76,
+        "avgWaste": 4.29,
+        "sellOutWeeks": 0
+      },
+      "Thursday": {
+        "weeksTracked": 21,
+        "avgOrder": 33.05,
+        "avgWaste": 5.76,
+        "sellOutWeeks": 0
+      },
+      "Friday": {
+        "weeksTracked": 22,
+        "avgOrder": 38.45,
+        "avgWaste": 6.0,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 22,
+        "avgOrder": 43.64,
+        "avgWaste": 3.77,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 21,
+        "avgOrder": 38.38,
+        "avgWaste": 3.57,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Peaches & Cream Danish"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Monday": {
+        "weeksTracked": 9,
+        "avgOrder": 19.33,
+        "avgWaste": 4.33,
+        "sellOutWeeks": 0
+      },
+      "Tuesday": {
+        "weeksTracked": 9,
+        "avgOrder": 18.67,
+        "avgWaste": 11.22,
+        "sellOutWeeks": 0
+      },
+      "Wednesday": {
+        "weeksTracked": 9,
+        "avgOrder": 19.33,
+        "avgWaste": 2.22,
+        "sellOutWeeks": 0
+      },
+      "Thursday": {
+        "weeksTracked": 9,
+        "avgOrder": 19.33,
+        "avgWaste": 3.67,
+        "sellOutWeeks": 0
+      },
+      "Friday": {
+        "weeksTracked": 9,
+        "avgOrder": 23.33,
+        "avgWaste": 3.78,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 9,
+        "avgOrder": 25.33,
+        "avgWaste": 2.33,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 9,
+        "avgOrder": 20.0,
+        "avgWaste": 2.44,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Blueberry Lemon Zest Scone",
+      "Blueberry  Lemon Zest Scone"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Monday": {
+        "weeksTracked": 21,
+        "avgOrder": 23.05,
+        "avgWaste": 1.9,
+        "sellOutWeeks": 0
+      },
+      "Tuesday": {
+        "weeksTracked": 22,
+        "avgOrder": 23.14,
+        "avgWaste": 1.05,
+        "sellOutWeeks": 0
+      },
+      "Wednesday": {
+        "weeksTracked": 21,
+        "avgOrder": 25.29,
+        "avgWaste": 2.24,
+        "sellOutWeeks": 0
+      },
+      "Thursday": {
+        "weeksTracked": 20,
+        "avgOrder": 27.3,
+        "avgWaste": 1.25,
+        "sellOutWeeks": 0
+      },
+      "Friday": {
+        "weeksTracked": 21,
+        "avgOrder": 31.33,
+        "avgWaste": 1.57,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 22,
+        "avgOrder": 32.91,
+        "avgWaste": 2.05,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 21,
+        "avgOrder": 25.14,
+        "avgWaste": 1.05,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Cinnamon Roll Individual"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Monday": {
+        "weeksTracked": 21,
+        "avgOrder": 23.43,
+        "avgWaste": 3.0,
+        "sellOutWeeks": 0
+      },
+      "Tuesday": {
+        "weeksTracked": 22,
+        "avgOrder": 26.27,
+        "avgWaste": 2.82,
+        "sellOutWeeks": 0
+      },
+      "Wednesday": {
+        "weeksTracked": 22,
+        "avgOrder": 26.64,
+        "avgWaste": 3.86,
+        "sellOutWeeks": 0
+      },
+      "Thursday": {
+        "weeksTracked": 22,
+        "avgOrder": 29.18,
+        "avgWaste": 3.41,
+        "sellOutWeeks": 0
+      },
+      "Friday": {
+        "weeksTracked": 22,
+        "avgOrder": 32.18,
+        "avgWaste": 2.77,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 22,
+        "avgOrder": 44.82,
+        "avgWaste": 4.59,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 21,
+        "avgOrder": 40.0,
+        "avgWaste": 3.71,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Cinnamon Roll Pan"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Monday": {
+        "weeksTracked": 21,
+        "avgOrder": 4.19,
+        "avgWaste": 1.05,
+        "sellOutWeeks": 0
+      },
+      "Tuesday": {
+        "weeksTracked": 22,
+        "avgOrder": 4.5,
+        "avgWaste": 0.95,
+        "sellOutWeeks": 0
+      },
+      "Wednesday": {
+        "weeksTracked": 22,
+        "avgOrder": 4.45,
+        "avgWaste": 0.95,
+        "sellOutWeeks": 0
+      },
+      "Thursday": {
+        "weeksTracked": 22,
+        "avgOrder": 4.95,
+        "avgWaste": 0.82,
+        "sellOutWeeks": 0
+      },
+      "Friday": {
+        "weeksTracked": 22,
+        "avgOrder": 8.55,
+        "avgWaste": 0.55,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 22,
+        "avgOrder": 12.82,
+        "avgWaste": 2.5,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 21,
+        "avgOrder": 9.05,
+        "avgWaste": 2.57,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Pecan Roll Individual"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Monday": {
+        "weeksTracked": 21,
+        "avgOrder": 14.67,
+        "avgWaste": 2.57,
+        "sellOutWeeks": 0
+      },
+      "Tuesday": {
+        "weeksTracked": 22,
+        "avgOrder": 16.0,
+        "avgWaste": 2.05,
+        "sellOutWeeks": 0
+      },
+      "Wednesday": {
+        "weeksTracked": 22,
+        "avgOrder": 16.55,
+        "avgWaste": 2.55,
+        "sellOutWeeks": 0
+      },
+      "Thursday": {
+        "weeksTracked": 22,
+        "avgOrder": 17.82,
+        "avgWaste": 2.23,
+        "sellOutWeeks": 0
+      },
+      "Friday": {
+        "weeksTracked": 22,
+        "avgOrder": 19.82,
+        "avgWaste": 1.77,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 22,
+        "avgOrder": 22.45,
+        "avgWaste": 1.86,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 21,
+        "avgOrder": 18.57,
+        "avgWaste": 1.86,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Pecan Roll Pan"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Friday": {
+        "weeksTracked": 22,
+        "avgOrder": 4.27,
+        "avgWaste": 0.77,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 22,
+        "avgOrder": 5.73,
+        "avgWaste": 1.77,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 21,
+        "avgOrder": 4.33,
+        "avgWaste": 1.71,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Ham and Cheese Croissant"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Thursday": {
+        "weeksTracked": 22,
+        "avgOrder": 13.91,
+        "avgWaste": 0.41,
+        "sellOutWeeks": 0
+      },
+      "Friday": {
+        "weeksTracked": 22,
+        "avgOrder": 17.18,
+        "avgWaste": 1.5,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 22,
+        "avgOrder": 28.14,
+        "avgWaste": 2.55,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 21,
+        "avgOrder": 21.86,
+        "avgWaste": 3.71,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Blueberry Poptart",
+      "Lemon Poptart"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Friday": {
+        "weeksTracked": 22,
+        "avgOrder": 22.64,
+        "avgWaste": 0.73,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 22,
+        "avgOrder": 32.73,
+        "avgWaste": 1.27,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 21,
+        "avgOrder": 24.76,
+        "avgWaste": 0.95,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Morning Bun"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Friday": {
+        "weeksTracked": 21,
+        "avgOrder": 21.24,
+        "avgWaste": 1.1,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 21,
+        "avgOrder": 25.62,
+        "avgWaste": 2.52,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 20,
+        "avgOrder": 21.8,
+        "avgWaste": 0.9,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Chocolate Chip Walnut Cookie"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Monday": {
+        "weeksTracked": 20,
+        "avgOrder": 29.7,
+        "avgWaste": 2.95,
+        "sellOutWeeks": 0
+      },
+      "Tuesday": {
+        "weeksTracked": 22,
+        "avgOrder": 29.73,
+        "avgWaste": 1.73,
+        "sellOutWeeks": 0
+      },
+      "Wednesday": {
+        "weeksTracked": 22,
+        "avgOrder": 29.73,
+        "avgWaste": 1.64,
+        "sellOutWeeks": 0
+      },
+      "Thursday": {
+        "weeksTracked": 22,
+        "avgOrder": 29.73,
+        "avgWaste": 1.5,
+        "sellOutWeeks": 0
+      },
+      "Friday": {
+        "weeksTracked": 22,
+        "avgOrder": 31.36,
+        "avgWaste": 0.91,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 22,
+        "avgOrder": 35.45,
+        "avgWaste": 2.18,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 21,
+        "avgOrder": 28.86,
+        "avgWaste": 1.9,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Oatmeal Raisin Cookie"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Monday": {
+        "weeksTracked": 21,
+        "avgOrder": 28.86,
+        "avgWaste": 4.57,
+        "sellOutWeeks": 0
+      },
+      "Tuesday": {
+        "weeksTracked": 22,
+        "avgOrder": 29.73,
+        "avgWaste": 2.09,
+        "sellOutWeeks": 0
+      },
+      "Wednesday": {
+        "weeksTracked": 22,
+        "avgOrder": 29.73,
+        "avgWaste": 3.23,
+        "sellOutWeeks": 0
+      },
+      "Thursday": {
+        "weeksTracked": 22,
+        "avgOrder": 29.73,
+        "avgWaste": 5.27,
+        "sellOutWeeks": 0
+      },
+      "Friday": {
+        "weeksTracked": 22,
+        "avgOrder": 31.36,
+        "avgWaste": 4.68,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 22,
+        "avgOrder": 35.0,
+        "avgWaste": 4.0,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 21,
+        "avgOrder": 28.29,
+        "avgWaste": 6.62,
+        "sellOutWeeks": 0
+      }
+    }
+  },
+  {
+    "canonicalItems": [
+      "Fresh Berry Croissant"
+    ],
+    "weight": {},
+    "seasonalPick": false,
+    "days": {
+      "Friday": {
+        "weeksTracked": 14,
+        "avgOrder": 22.0,
+        "avgWaste": 1.43,
+        "sellOutWeeks": 0
+      },
+      "Saturday": {
+        "weeksTracked": 14,
+        "avgOrder": 32.79,
+        "avgWaste": 3.64,
+        "sellOutWeeks": 0
+      },
+      "Sunday": {
+        "weeksTracked": 14,
+        "avgOrder": 22.79,
+        "avgWaste": 0.71,
+        "sellOutWeeks": 0
+      }
+    }
+  }
+]
